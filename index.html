@@ -6,6 +6,7 @@
   <title>FlareAlumn- Centralized Alumni Management Platform</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://use.typekit.net/yjp3aho.css">
+  <link rel="stylesheet" href="src/index.css">
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     tailwind.config = {
@@ -19,7 +20,9 @@
     }
   </script>
 </head>
-<body class="font-sofia bg-gray-50 min-h-screen">
+<body class="font-sofia bg-gray-50 min-h-screen fade-in">
+<!-- Loading Spinner -->
+<div id="spinner"></div>
   <div id="navbar-container" data-source="components/navbar.html"></div>
   
   <!-- Hero Section -->
@@ -27,9 +30,10 @@
     <div class="absolute inset-0 bg-black opacity-20"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6" data-id="hero-title">
-          Welcome to FlareAlumn
-        </h1>
+<h1 class="text-4xl md:text-6xl font-bold mb-6" data-id="hero-title">
+  <span class="sniper">Welcome to FlareAlumn</span>
+</h1>
+
         <p class="text-xl md:text-2xl mb-8 text-blue-100" data-id="hero-subtitle">
           Your centralized platform for alumni management, networking, and growth
         </p>
@@ -197,5 +201,35 @@
       lucide.createIcons();
     }, 100);
   </script>
+  <script>
+  window.addEventListener('load', () => {
+    const sniper = document.querySelector('.sniper');
+    sniper.style.visibility = 'hidden';
+    setTimeout(() => {
+      sniper.style.visibility = 'visible';
+      sniper.style.animationPlayState = 'running';
+    }, 600); // matches body fade-in duration
+  });
+</script>
+<script>
+  // Hide spinner when page fully loaded
+  window.addEventListener('load', () => {
+    document.getElementById('spinner').style.display = 'none';
+  });
+
+  // Fade-out on page navigation
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', e => {
+      // Only fade-out for internal links
+      if (link.hostname === window.location.hostname) {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => window.location = link.href, 500);
+      }
+    });
+  });
+</script>
 </body>
+
+
 </html>
